@@ -1,0 +1,37 @@
+{%extends 'base.html'%}
+
+{%block title%}{{pet.name}}'s Profile{%endblock%}
+
+{%block content%}
+
+<div class="container">
+    <h1 class="text-center display-2">{{pet.name}}'s Profile</h1>
+
+    <div class="row row-cols-2 align-items-center" >
+        <div class="col">
+            <h4>Pet Name: {{pet.name}}</h4>
+            <h4>Pet Species: {{pet.species}}</h4>
+            <h4>Pet Age: {{pet.age}}</h4>
+            <h4>Pet Notes: {{pet.notes}}</h4>
+            {%if pet.available == True%}
+                <h4>Pet Availability: Available to Adopt!</h4>
+            {%else%}
+                <h4>Pet Availability: Adopted!</h4>
+            {%endif%}
+            <form action="/{{pet.id}}/editpet">
+                <button class="btn btn-primary btn-lg ">Edit {{pet.name}}'s Profile</button>
+            </form>
+        </div>
+        <div class="col text-center">
+            <img src="{{pet.photo_url}}" alt="pet photo" class="img-fluid" max-height = "200px">
+        </div>
+        
+        
+    </div>
+
+</div>
+
+
+{%endblock%}
+
+{%block footer%} <a href="/">Home</a> {%endblock%}
