@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+
 from flask import Flask, request, render_template, redirect, flash, session
 from flask.templating import render_template_string
 
@@ -7,17 +10,20 @@ from models import db, connect_db, Pet
 from flask_sqlalchemy import SQLAlchemy
 from forms import AddPetForm, EditPetForm
 
-
+load_dotenv()
+password = os.getenv('PASSWORD')
+SECRET_KEY = os.getenv('SECRET_KEY')
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///pet_adoption'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:{password}@localhost:5432/pet_adoption'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 
 connect_db(app)
 db.create_all()
 
-app.config['SECRET_KEY'] = "Pet_Adoption"
+app.config['SECRET_KEY'] = SECRET_KEY
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
 
